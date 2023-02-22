@@ -1,0 +1,22 @@
+services:
+  - docker
+
+language: node_js
+# language: generic
+
+os: linux
+
+node_js:
+  - "18"
+
+before_install:
+  - docker build -t iuliancarnaru/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true iuliancarnaru/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t iuliancarnaru/multi-client ./client
+  - docker build -t iuliancarnaru/multi-nginx ./nginx
+  - docker build -t iuliancarnaru/multi-server ./server
+  - docker build -t iuliancarnaru/multi-worker ./worker
