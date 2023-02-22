@@ -1,13 +1,7 @@
+language: generic
+
 services:
   - docker
-
-language: node_js
-# language: generic
-
-os: linux
-
-node_js:
-  - "18"
 
 before_install:
   - docker build -t iuliancarnaru/react-test -f ./client/Dockerfile.dev ./client
